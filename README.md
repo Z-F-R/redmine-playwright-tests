@@ -137,7 +137,6 @@ Install:
 
 * Node.js
 * npm
-* Java Runtime Environment for Allure Commandline
 * Git
 
 ### Clone the repository

@@ -10,10 +10,10 @@
     "test:debug": "playwright test --debug",
     "test:ui": "playwright test --ui",
     "allure:clean": "node -e \"const fs = require('fs'); for (const dir of ['allure-results', 'allure-report']) fs.rmSync(dir, { recursive: true, force: true });\"",
+    "allure:clean:report": "node -e \"require('fs').rmSync('allure-report', { recursive: true, force: true });\"",
     "test:allure": "npm run allure:clean && playwright test",
-    "allure:generate": "allure generate allure-results --clean --output allure-report",
-    "allure:open": "allure open allure-report",
-    "allure:report": "npm run allure:generate && npm run allure:open"
+    "allure:generate": "npm run allure:clean:report && allure generate ./allure-results --output allure-report",
+    "allure:generate:open": "npm run allure:clean:report && allure generate ./allure-results --output allure-report --open"
   },
   "keywords": [
     "playwright",
@@ -28,7 +28,7 @@
   "devDependencies": {
     "@playwright/test": "^1.62.0",
     "@types/node": "^26.1.2",
-    "allure-commandline": "^2.43.0",
+    "allure": "^3.14.3",
     "allure-js-commons": "^3.10.2",
     "allure-playwright": "^3.10.2",
     "typescript": "^7.0.2"
