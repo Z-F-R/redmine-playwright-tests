@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "Preserve",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2022", "DOM"],
+    "types": ["node", "@playwright/test"],
+
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+
+    "paths": {
+      "@pages/*": ["./pages/*"],
+      "@tests/*": ["./tests/*"],
+      "@data/*": ["./test-data/*"],
+      "@fixtures/*": ["./fixtures/*"]
+    }
+  },
+  "include": [
+    "playwright.config.ts",
+    "tests/**/*.ts",
+    "pages/**/*.ts",
+    "test-data/**/*.ts",
+    "fixtures/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "playwright-report",
+    "test-results",
+    "allure-results",
+    "allure-report"
+  ]
+}
