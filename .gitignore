@@ -10,6 +10,7 @@ playwright/.cache/
 # Allure artifacts
 allure-results/
 allure-report/
+allure-history/
 
 # Authentication and environment files
 playwright/.auth/

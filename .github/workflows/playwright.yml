@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   test:
@@ -23,6 +23,25 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+
+      - name: Restore Allure history
+        if: ${{ github.event_name != 'pull_request' }}
+        shell: bash
+        run: |
+          mkdir -p allure-history
+
+          if git ls-remote --exit-code --heads origin gh-pages > /dev/null 2>&1; then
+            git fetch origin gh-pages:refs/remotes/origin/gh-pages
+
+            if git show origin/gh-pages:allure-history/history.jsonl \
+              > allure-history/history.jsonl 2>/dev/null; then
+              echo "Previous Allure history restored."
+            else
+              echo "The gh-pages branch exists, but no history file was found."
+            fi
+          else
+            echo "The gh-pages branch does not exist yet. The first report will start a new history."
+          fi
 
       - name: Set up Node.js
         uses: actions/setup-node@v6
@@ -46,7 +65,15 @@ jobs:
         if: ${{ !cancelled() }}
         run: npm run allure:generate
 
-      - name: Upload Allure report
+      - name: Save Allure history in report
+        if: ${{ github.event_name != 'pull_request' && !cancelled() }}
+        shell: bash
+        run: |
+          mkdir -p allure-report/allure-history
+          cp allure-history/history.jsonl \
+            allure-report/allure-history/history.jsonl
+
+      - name: Upload Allure report artifact
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v5
         with:
@@ -73,30 +100,11 @@ jobs:
           if-no-files-found: ignore
           retention-days: 30
 
-      - name: Upload GitHub Pages artifact
+      - name: Publish Allure report to gh-pages
         if: ${{ github.event_name != 'pull_request' && !cancelled() }}
-        uses: actions/upload-pages-artifact@v4
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: allure-report/
-
-  deploy:
-    name: Publish Allure report
-    if: ${{ github.event_name != 'pull_request' && !cancelled() }}
-
-    needs:
-      - test
-
-    permissions:
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Deploy Allure report to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./allure-report
+          full_commit_message: "ci: publish Allure report for ${{ github.sha }}"

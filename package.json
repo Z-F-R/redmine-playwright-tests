@@ -12,7 +12,7 @@
     "allure:clean": "node -e \"const fs = require('fs'); for (const dir of ['allure-results', 'allure-report']) fs.rmSync(dir, { recursive: true, force: true });\"",
     "allure:clean:report": "node -e \"require('fs').rmSync('allure-report', { recursive: true, force: true });\"",
     "test:allure": "npm run allure:clean && playwright test",
-    "allure:generate": "npm run allure:clean:report && allure generate ./allure-results --output allure-report",
+    "allure:generate": "npm run allure:clean:report && allure generate ./allure-results --config allurerc.mjs --output allure-report",
     "allure:generate:open": "npm run allure:clean:report && allure generate ./allure-results --output allure-report --open"
   },
   "keywords": [
