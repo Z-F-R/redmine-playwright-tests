@@ -1,5 +1,6 @@
 # Redmine Playwright Automation Tests
 
+
 ## Overview
 
 This project contains automated end-to-end UI tests for `https://www.redmine.org`.
@@ -7,6 +8,7 @@ This project contains automated end-to-end UI tests for `https://www.redmine.org
 The framework is implemented using Playwright with TypeScript and follows the Page Object Model pattern. It includes custom Playwright fixtures, Allure reporting, and automated test execution through GitHub Actions.
 
 The goal of the project is to verify key functionality of the Redmine website, including page availability, navigation, site search, documentation links, and release information.
+
 
 ## Tech Stack
 
@@ -18,6 +20,7 @@ The goal of the project is to verify key functionality of the Redmine website, i
 * Allure Report
 * GitHub Actions
 * Chromium
+
 
 ## Project Structure
 
@@ -52,6 +55,7 @@ redmine-playwright-tests/
 └── tsconfig.json
 ```
 
+
 ## Test Plan
 
 The manual test plan is stored in:
@@ -61,6 +65,7 @@ test-plan/Redmine_Test_Plan_and_Test_Cases.xlsx
 ```
 
 The test case IDs in the document correspond to the IDs used in the automated tests and Allure Report.
+
 
 ## Automated Test Scenarios
 
@@ -72,7 +77,9 @@ The test case IDs in the document correspond to the IDs used in the automated te
 | TC-004 | Verify navigation to the User Guide page     |
 | TC-005 | Verify the Latest releases section           |
 
+
 ## Framework Design
+
 
 ### Page Object Model
 
@@ -97,6 +104,7 @@ This approach provides:
 * easier locator maintenance;
 * reduced duplication.
 
+
 ### Base Page
 
 Common page functionality is stored in `BasePage`.
@@ -112,6 +120,7 @@ export abstract class BasePage {
 ```
 
 Page classes inherit shared behavior from `BasePage`.
+
 
 ### Custom Fixtures
 
@@ -129,7 +138,9 @@ test(
 
 This removes repeated Page Object initialization from test files and ensures that all Page Objects use the same Playwright `page` instance.
 
+
 ## Installation
+
 
 ### Prerequisites
 
@@ -139,6 +150,7 @@ Install:
 * npm
 * Git
 
+
 ### Clone the repository
 
 ```bash
@@ -146,11 +158,13 @@ git clone <repository-url>
 cd redmine-playwright-tests
 ```
 
+
 ### Install project dependencies
 
 ```bash
 npm ci
 ```
+
 
 ### Install Chromium
 
@@ -166,7 +180,9 @@ On a Linux CI environment, Chromium and its system dependencies can be installed
 npx playwright install --with-deps chromium
 ```
 
+
 ## Running Tests
+
 
 ### Run all tests in headless mode
 
@@ -174,11 +190,13 @@ npx playwright install --with-deps chromium
 npm test
 ```
 
+
 ### Run tests in headed mode
 
 ```bash
 npm run test:headed
 ```
+
 
 ### Run tests in debug mode
 
@@ -186,11 +204,13 @@ npm run test:headed
 npm run test:debug
 ```
 
+
 ### Run tests in Playwright UI Mode
 
 ```bash
 npm run test:ui
 ```
+
 
 ### Check TypeScript
 
@@ -200,7 +220,9 @@ npm run typecheck
 
 The type check validates the TypeScript project without generating JavaScript files.
 
+
 ## Allure Reporting
+
 
 ### Clean previous Allure results and run tests
 
@@ -208,17 +230,20 @@ The type check validates the TypeScript project without generating JavaScript fi
 npm run test:allure
 ```
 
+
 ### Generate the Allure report
 
 ```bash
 npm run allure:generate
 ```
 
+
 ### Open the generated report
 
 ```bash
 npm run allure:open
 ```
+
 
 ### Generate and open the report
 
@@ -237,6 +262,7 @@ The Allure report includes:
 * failure details;
 * screenshots, videos, and traces when available.
 
+
 ## Playwright Configuration
 
 The framework is configured to:
@@ -250,33 +276,29 @@ The framework is configured to:
 * record a trace on the first retry;
 * generate Allure result files.
 
+
 ## CI/CD Pipeline
 
-GitHub Actions runs the automated tests after pushes and pull requests to the main branch.
+GitHub Actions automatically runs the test suite on pushes and pull requests to the `main` branch.
 
-The planned pipeline flow is:
+The pipeline:
 
-```text
-GitHub push or pull request
-            |
-            v
-Install Node.js dependencies
-            |
-            v
-Install Chromium and system dependencies
-            |
-            v
-Run TypeScript type checking
-            |
-            v
-Run Playwright tests
-            |
-            v
-Generate Allure Report
-            |
-            v
-Publish report to GitHub Pages
-```
+1. Installs project dependencies.
+2. Installs Chromium and required system dependencies.
+3. Runs TypeScript type checking.
+4. Executes Playwright tests.
+5. Restores Allure history from the previous run.
+6. Generates a new Allure report.
+7. Publishes the report to the `gh-pages` branch.
+8. Deploys the report through GitHub Pages.
+
+
+## Allure Report
+
+The latest Allure test report is available on GitHub Pages:
+
+[View Allure Report](https://z-f-r.github.io/redmine-playwright-tests/)
+
 
 ## Test Artifacts
 
