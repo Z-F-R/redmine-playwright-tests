@@ -16,12 +16,6 @@ export class UserGuidePage extends BasePage {
         this.gettingStartedLink = page.locator('#content').getByRole('link', { name: 'Getting Started', exact: true });
     }
 
-    // ==================== Actions ====================
-
-    async openUserGuidePage(): Promise<void> {
-        await this.open('/projects/redmine/wiki/Guide');
-    }
-
     // ==================== Assertions ====================
 
     async verifyPageOpened(): Promise<void> {

@@ -14,12 +14,6 @@ export class DownloadPage extends BasePage {
         this.latestReleasesHeading = page.locator('#content').getByRole('heading', { name: 'Latest releases', exact: true });
     }
 
-    // ==================== Actions ====================
-
-    async openDownloadPage(): Promise<void> {
-        await this.open('/projects/redmine/wiki/Download');
-    }
-
     // ==================== Assertions ====================
 
     async verifyPageOpened(): Promise<void> {

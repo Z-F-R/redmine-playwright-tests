@@ -48,6 +48,7 @@ redmine-playwright-tests/
 │   └── redmine.spec.ts
 │
 ├── .gitignore
+├── allurerc.mjs
 ├── package.json
 ├── package-lock.json
 ├── playwright.config.ts
@@ -238,17 +239,10 @@ npm run allure:generate
 ```
 
 
-### Open the generated report
+### Generate and open the Allure report
 
 ```bash
-npm run allure:open
-```
-
-
-### Generate and open the report
-
-```bash
-npm run allure:report
+npm run allure:generate:open
 ```
 
 The Allure report includes:
@@ -309,6 +303,7 @@ test-results/
 playwright-report/
 allure-results/
 allure-report/
+allure-history/
 ```
 
 These directories are generated automatically during test execution and report generation.
