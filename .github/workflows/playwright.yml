@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+
   pull_request:
     branches:
       - main
+
   workflow_dispatch:
 
 permissions:
@@ -70,3 +72,31 @@ jobs:
           path: allure-results/
           if-no-files-found: ignore
           retention-days: 30
+
+      - name: Upload GitHub Pages artifact
+        if: ${{ github.event_name != 'pull_request' && !cancelled() }}
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: allure-report/
+
+  deploy:
+    name: Publish Allure report
+    if: ${{ github.event_name != 'pull_request' && !cancelled() }}
+
+    needs:
+      - test
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy Allure report to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
