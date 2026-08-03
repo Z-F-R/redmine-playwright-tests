@@ -13,10 +13,7 @@ type PageFixtures = {
 
 export const test = base.extend<PageFixtures>({
     homePage: async ({ page }, use) => {
-        const homePage = new HomePage(page);
-
-        await homePage.openHomePage();
-        await use(homePage);
+        await use(new HomePage(page));
     },
 
     downloadPage: async ({ page }, use) => {

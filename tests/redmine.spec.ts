@@ -14,6 +14,7 @@ test.describe('Redmine home page', () => {
         await allure.severity('critical');
 
         await test.step('Verify that the Home page is opened', async () => {
+            await homePage.openHomePage();
             await homePage.verifyPageOpened();
         });
     });
@@ -23,6 +24,7 @@ test.describe('Redmine home page', () => {
         await allure.severity('normal');
 
         await test.step('Click the Download link', async () => {
+            await homePage.openHomePage();
             await homePage.clickDownloadLink();
         });
 
@@ -39,6 +41,7 @@ test.describe('Redmine home page', () => {
         await allure.tags('Search');
 
         await test.step(`Search for the "${searchQuery}" keyword`, async () => {
+            await homePage.openHomePage();
             await homePage.searchFor(searchQuery);
         });
 
@@ -56,6 +59,7 @@ test.describe('Redmine home page', () => {
         await allure.severity('normal');
 
         await test.step("Click the User's Guide link", async () => {
+            await homePage.openHomePage();
             await homePage.clickUserGuideLink();
         });
 
@@ -70,6 +74,7 @@ test.describe('Redmine home page', () => {
         await allure.tags('Release');
 
         await test.step('Verify that the Latest releases section is visible', async () => {
+            await homePage.openHomePage();
             await homePage.verifyLatestReleasesHeadingIsVisible();
         });
 
